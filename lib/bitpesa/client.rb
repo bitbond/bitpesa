@@ -12,10 +12,11 @@ module BitPesa
     @secret   = "API secret"
     @base_url = "/v1"
     @timeout  = 5
+    @debug    = false
 
     class << self
 
-      attr_accessor :host, :key, :secret, :timeout
+      attr_accessor :host, :key, :secret, :timeout, :debug
       attr_reader   :base_url
 
       def get(endpoint, payload=nil)
@@ -83,7 +84,7 @@ module BitPesa
           connection.open_timeout = timeout
           connection.read_timeout = timeout
           connection.use_ssl = true
-          connection.set_debug_output $stderr
+          connection.set_debug_output($stderr) if debug
           connection
         end
 
