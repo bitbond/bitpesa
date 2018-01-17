@@ -21,7 +21,8 @@ module BitPesa
 
       def get(endpoint, payload=nil)
         url = request_url(endpoint)
-        url += "?" + URI.encode_www_form(payload) if payload
+        query_string = payload && payload.reduce([]) {|r,item| r << item[1].to_query(item[0])}.join("&")
+        url += "?" + URI.encode_www_form(query_string) if query_string
         request "GET", url
       end
 
